@@ -1,3 +1,5 @@
 {
+    "workbench.iconTheme": "vscode-icons",
+    "vsicons.dontShowNewVersionMessage": true,
     "java.configuration.updateBuildConfiguration": "automatic"
 }
