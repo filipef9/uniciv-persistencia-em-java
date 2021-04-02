@@ -1,9 +1,6 @@
 image:
   file: .gitpod.Dockerfile
 
-tasks:
-  - init: sdk use java 11.0.10.fx-zulu
-
 vscode:
   extensions:
     - vscjava.vscode-java-test@0.28.1:Vq5tqFnbBv8CzIO03Hf19A==
