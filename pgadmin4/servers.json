@@ -4,8 +4,9 @@
             "Name": "Pós-Java",
             "Group": "Uniciv",
             "Port": 5432,
-            "Username": "gitpod",
-            "Host": "127.0.0.1",
+            "Username": "admin",
+            "Password": "admin",
+            "Host": "pgsql-server",
             "SSLMode": "prefer",
             "MaintenanceDB": "postgres"
         }

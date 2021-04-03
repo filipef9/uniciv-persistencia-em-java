@@ -1,19 +1,22 @@
-image:
-  file: .gitpod.Dockerfile
-
-tasks:
-  - name: pgadmin4
-    command: ./pgadmin4/setup-web-unattended.sh
-  
-# Ports to expose on workspace startup (optional)
-ports:
-  - port: 5050
-    onOpen: open-browser
-  - port: 5432
-    onOpen: ignore
-
 vscode:
   extensions:
     - vscjava.vscode-java-test@0.28.1:Vq5tqFnbBv8CzIO03Hf19A==
     - vscjava.vscode-maven@0.21.2:tFEkt2FqLujaNTLU5AmRiQ==
     - vscode-icons-team.vscode-icons@11.2.0:wzrAlW1rFgqS/LpeO/sU2Q==
+
+# List the ports you want to expose and what to do when they are served. See https://www.gitpod.io/docs/config-ports/
+ports:
+  - port: 8080
+    onOpen: open-preview
+  - port: 5432
+    onOpen: ignore
+
+# List the start up tasks. You can start them in parallel in multiple terminals. See https://www.gitpod.io/docs/config-start-tasks/
+tasks:
+  - before: |
+      sudo docker-up &
+      mkdir -p /workspace/pgadmin-data
+      sudo chown -R 5050:5050 /workspace/pgadmin-data
+      sleep 5
+    init: docker-compose up --no-start
+    command: docker-compose up
