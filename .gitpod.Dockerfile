@@ -13,6 +13,7 @@ RUN apt-get update && \
 
 RUN pip install pgadmin4
 
+RUN pwd && ls -liah
 RUN chmod +x pgadmin4/setup-web-unattended.sh 
 
 USER gitpod
