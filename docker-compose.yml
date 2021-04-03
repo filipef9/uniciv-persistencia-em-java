@@ -19,7 +19,7 @@ services:
       PGADMIN_DEFAULT_EMAIL: filipe.fsn@uniciv.com.br
       PGADMIN_DEFAULT_PASSWORD: uniciv
       PGADMIN_LISTEN_PORT: 8080
-      PGADMIN_SERVER_JSON_FILE: /workspace/postgres-compose/servers.json
+      PGADMIN_SERVER_JSON_FILE: /workspace/uniciv-pos-java-jdbc/pgadmin4/servers.json
     ports:
       - "8080:8080"
     volumes:
