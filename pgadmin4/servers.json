@@ -1,0 +1,13 @@
+{
+    "Servers": {
+        "1": {
+            "Name": "Pos Java",
+            "Group": "Uniciv",
+            "Port": 5432,
+            "Username": "postgres",
+            "Host": "127.0.0.1",
+            "SSLMode": "prefer",
+            "MaintenanceDB": "postgres"
+        }
+    }
+}

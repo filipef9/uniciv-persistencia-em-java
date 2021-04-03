@@ -1,6 +1,17 @@
 image:
   file: .gitpod.Dockerfile
 
+tasks:
+  - name: pgadmin4
+    command: ./pgadmin4/setup-web-unattended.sh
+  
+# Ports to expose on workspace startup (optional)
+ports:
+  - port: 5050
+    onOpen: open-browser
+  - port: 5432
+    onOpen: ignore
+
 vscode:
   extensions:
     - vscjava.vscode-java-test@0.28.1:Vq5tqFnbBv8CzIO03Hf19A==
