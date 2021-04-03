@@ -1,10 +1,10 @@
 {
     "Servers": {
         "1": {
-            "Name": "Pos Java",
+            "Name": "Pós-Java",
             "Group": "Uniciv",
             "Port": 5432,
-            "Username": "postgres",
+            "Username": "gitpod",
             "Host": "127.0.0.1",
             "SSLMode": "prefer",
             "MaintenanceDB": "postgres"
