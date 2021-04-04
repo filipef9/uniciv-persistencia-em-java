@@ -9,8 +9,8 @@ public class SingleConnection {
 
     private static Connection connection = null;
     private static String url = "jdbc:postgresql://localhost:5432/posjava";
-    private static String user = "gitpod";
-    private static String password = "";
+    private static String user = "admin";
+    private static String password = "admin";
 
     static {
         conectar();
