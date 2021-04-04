@@ -26,7 +26,7 @@ public class UserDaoTest {
     private User user;
 
     @Test
-    public void salvar_user() {
+    public void save_user() {
         // arrange:
         connection = SingleConnection.getConnection();
         connectionSpy = spy(connection);
@@ -46,7 +46,7 @@ public class UserDaoTest {
     }
 
     @Test
-    public void listar_usuarios() {
+    public void list_all_users() {
         // arrange:
         connection = SingleConnection.getConnection();
         userDao = new UserDao(connection);
@@ -59,7 +59,7 @@ public class UserDaoTest {
     }
 
     @Test
-    public void buscar_por_id() {
+    public void find_by_id() {
         // arrange:
         connection = SingleConnection.getConnection();
         userDao = new UserDao(connection);
@@ -69,6 +69,26 @@ public class UserDaoTest {
 
         // assert:
         assertThat(userFound, is(notNullValue()));
+    }
+
+    @Test
+    public void update_user() {
+        // arrange:
+        connection = SingleConnection.getConnection();
+        connectionSpy = spy(connection);
+        userDao = new UserDao(connectionSpy);
+        user = User.of(1005L, "Jane Doe", "jane.doe@gmail.com");
+
+        // act:
+        userDao.atualizar(user);
+
+        // assert:
+        try {
+            verify(connectionSpy, times(1)).prepareStatement(anyString());
+            verify(connectionSpy, times(1)).commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }

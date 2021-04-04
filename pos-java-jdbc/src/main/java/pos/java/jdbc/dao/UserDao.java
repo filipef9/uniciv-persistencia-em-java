@@ -86,4 +86,22 @@ public class UserDao {
         }
 	}
 
+	public void atualizar(User user) {
+        try {
+            final String sql = "UPDATE tbl_user SET nome = ?, email = ? WHERE id = " + user.getId();
+            final PreparedStatement update = connection.prepareStatement(sql);
+            update.setString(1, user.getNome());
+            update.setString(2, user.getEmail());
+            update.execute();
+            connection.commit();
+        } catch (Exception e) {
+            try {
+                connection.rollback();
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+            e.printStackTrace();
+        }
+	}
+
 }
