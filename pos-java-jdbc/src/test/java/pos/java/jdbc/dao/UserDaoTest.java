@@ -91,4 +91,24 @@ public class UserDaoTest {
         }
     }
 
+    @Test
+    public void delete_user() {
+        // arrange:
+        connection = SingleConnection.getConnection();
+        connectionSpy = spy(connection);
+        userDao = new UserDao(connectionSpy);
+
+        // act:
+        userDao.deletar(1006L);
+
+        // assert:
+        try {
+            verify(connectionSpy, times(1)).prepareStatement(anyString());
+            verify(connectionSpy, times(1)).commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
 }

@@ -97,4 +97,20 @@ public class UserDao {
         }
 	}
 
+	public void deletar(final Long id) {
+        try {
+            final String sql = "DELETE FROM tbl_user WHERE id = " + id;
+            final PreparedStatement delete = connection.prepareStatement(sql);
+            delete.execute();
+            connection.commit();
+        } catch (Exception e) {
+            try {
+                connection.rollback();
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+            e.printStackTrace();
+        }
+	}
+
 }
