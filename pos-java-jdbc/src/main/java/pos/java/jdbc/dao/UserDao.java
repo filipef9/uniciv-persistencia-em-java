@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import pos.java.jdbc.model.Phone;
 import pos.java.jdbc.model.User;
 
 public class UserDao {
@@ -35,6 +36,25 @@ public class UserDao {
         }
     }
 
+    public void salvarTelefone(final Phone phone) {
+        try {
+            final String sql = "INSERT INTO tbl_telefone (numero, tipo, idUser) VALUES (?, ?, ?)";
+            PreparedStatement insert = connection.prepareStatement(sql);
+            insert.setString(1, phone.getNumero());
+            insert.setString(2, phone.getTipo());
+            insert.setLong(3, phone.getIdUser());
+            insert.execute();
+            connection.commit();
+        } catch (Exception e) {
+            try {
+                connection.rollback();
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+            e.printStackTrace();
+        }
+    }
+
     public List<User> listar() {
         try {
             List<User> usuarios = new ArrayList<>();
@@ -42,11 +62,7 @@ public class UserDao {
             final PreparedStatement select = connection.prepareStatement(sql);
             final ResultSet resultado = select.executeQuery();
             while (resultado.next()) {
-                User user = User.of(
-                    resultado.getLong("id"),
-                    resultado.getString("nome"),
-                    resultado.getString("email")
-                );
+                User user = User.of(resultado.getLong("id"), resultado.getString("nome"), resultado.getString("email"));
                 usuarios.add(user);
             }
 
@@ -57,29 +73,25 @@ public class UserDao {
         }
     }
 
-	public User buscarPorId(long id) {
-		try {
-           final String sql = "SELECT * FROM tbl_user WHERE id = " + id;
-           final PreparedStatement select = connection.prepareStatement(sql);
-           final ResultSet resultado = select.executeQuery();
+    public User buscarPorId(long id) {
+        try {
+            final String sql = "SELECT * FROM tbl_user WHERE id = " + id;
+            final PreparedStatement select = connection.prepareStatement(sql);
+            final ResultSet resultado = select.executeQuery();
 
-           User userFound = null;
-           while (resultado.next()) {
-                userFound = User.of(
-                    resultado.getLong("id"),
-                    resultado.getString("nome"),
-                    resultado.getString("email")
-                );
-           }
+            User userFound = null;
+            while (resultado.next()) {
+                userFound = User.of(resultado.getLong("id"), resultado.getString("nome"), resultado.getString("email"));
+            }
 
-           return userFound;
+            return userFound;
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
-	}
+    }
 
-	public void atualizar(User user) {
+    public void atualizar(User user) {
         try {
             final String sql = "UPDATE tbl_user SET nome = ?, email = ? WHERE id = " + user.getId();
             final PreparedStatement update = connection.prepareStatement(sql);
@@ -95,9 +107,9 @@ public class UserDao {
             }
             e.printStackTrace();
         }
-	}
+    }
 
-	public void deletar(final Long id) {
+    public void deletar(final Long id) {
         try {
             final String sql = "DELETE FROM tbl_user WHERE id = " + id;
             final PreparedStatement delete = connection.prepareStatement(sql);
@@ -111,6 +123,6 @@ public class UserDao {
             }
             e.printStackTrace();
         }
-	}
+    }
 
 }

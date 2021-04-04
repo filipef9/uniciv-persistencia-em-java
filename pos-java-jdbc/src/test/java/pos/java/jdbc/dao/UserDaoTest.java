@@ -16,6 +16,7 @@ import java.util.List;
 import org.junit.Test;
 
 import pos.java.jdbc.conexao.SingleConnection;
+import pos.java.jdbc.model.Phone;
 import pos.java.jdbc.model.User;
 
 public class UserDaoTest {
@@ -24,6 +25,7 @@ public class UserDaoTest {
     private Connection connectionSpy;
     private UserDao userDao;
     private User user;
+    private Phone phone;
 
     @Test
     public void save_user() {
@@ -46,6 +48,26 @@ public class UserDaoTest {
     }
 
     @Test
+    public void save_phone() {
+        // arrange:
+        connection = SingleConnection.getConnection();
+        connectionSpy = spy(connection);
+        userDao = new UserDao(connectionSpy);
+        phone = Phone.of(null, "(61) 98113-1295", "celular", 1L);
+
+        // act:
+        userDao.salvarTelefone(phone);
+
+        // assert:
+        try {
+            verify(connectionSpy, times(1)).prepareStatement(anyString());
+            verify(connectionSpy, times(1)).commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
     public void list_all_users() {
         // arrange:
         connection = SingleConnection.getConnection();
@@ -55,7 +77,7 @@ public class UserDaoTest {
         List<User> usuarios = userDao.listar();
 
         // assert:
-       assertThat(usuarios, is(not(empty())));
+        assertThat(usuarios, is(not(empty())));
     }
 
     @Test
