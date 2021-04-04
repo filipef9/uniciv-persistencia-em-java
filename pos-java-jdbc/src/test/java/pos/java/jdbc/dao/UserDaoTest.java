@@ -38,7 +38,7 @@ public class UserDaoTest {
 
         // assert:
         try {
-            verify(connectionSpy, times(2)).prepareStatement(anyString());
+            verify(connectionSpy, times(1)).prepareStatement(anyString());
             verify(connectionSpy, times(1)).commit();
         } catch (Exception e) {
             e.printStackTrace();

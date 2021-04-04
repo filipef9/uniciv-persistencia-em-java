@@ -19,11 +19,10 @@ public class UserDao {
 
     public void salvar(final User user) {
         try {
-            final String sql = "INSERT INTO tbl_user (id, nome, email) VALUES (?, ?, ?)";
+            final String sql = "INSERT INTO tbl_user (nome, email) VALUES (?, ?)";
             PreparedStatement insert = connection.prepareStatement(sql);
-            insert.setLong(1, getNextId());
-            insert.setString(2, user.getNome());
-            insert.setString(3, user.getEmail());
+            insert.setString(1, user.getNome());
+            insert.setString(2, user.getEmail());
             insert.execute();
             connection.commit();
         } catch (Exception e) {
@@ -34,12 +33,6 @@ public class UserDao {
             }
             e.printStackTrace();
         }
-    }
-
-    private Long getNextId() {
-        final List<User> users = listar();
-        users.sort((u1, u2) -> u1.getId().compareTo(u2.getId()));
-        return users.get(users.size() - 1).getId() + 1;
     }
 
     public List<User> listar() {
