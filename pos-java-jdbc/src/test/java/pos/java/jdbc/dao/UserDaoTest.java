@@ -18,6 +18,7 @@ import org.junit.Test;
 import pos.java.jdbc.conexao.SingleConnection;
 import pos.java.jdbc.model.Phone;
 import pos.java.jdbc.model.User;
+import pos.java.jdbc.vo.UserWithPhoneVo;
 
 public class UserDaoTest {
 
@@ -91,6 +92,20 @@ public class UserDaoTest {
 
         // assert:
         assertThat(userFound, is(notNullValue()));
+    }
+
+    @Test
+    public void search_user_with_phone_by_id() {
+        // arrange:
+        connection = SingleConnection.getConnection();
+        userDao = new UserDao(connection);
+
+        // act:
+        List<UserWithPhoneVo> usuarios = userDao.listarUsuariosComTelefone(1L);
+
+        // assert:
+        assertThat(usuarios, is(notNullValue()));
+        assertThat(usuarios, is(not(empty())));
     }
 
     @Test

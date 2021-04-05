@@ -9,6 +9,7 @@ import java.util.List;
 
 import pos.java.jdbc.model.Phone;
 import pos.java.jdbc.model.User;
+import pos.java.jdbc.vo.UserWithPhoneVo;
 
 public class UserDao {
 
@@ -124,5 +125,29 @@ public class UserDao {
             e.printStackTrace();
         }
     }
+
+	public List<UserWithPhoneVo> listarUsuariosComTelefone(final Long idUser) {
+        try {
+            String sql = "SELECT u.nome as nome, t.numero as telefone, u.email as email ";
+            sql += "FROM tbl_telefone as t ";
+            sql += "INNER JOIN tbl_user as u ON t.idUser = u.id ";
+            sql += "WHERE u.id = " + idUser;
+            final PreparedStatement select = connection.prepareStatement(sql);
+            final ResultSet resultado = select.executeQuery();
+            List<UserWithPhoneVo> usuarios = new ArrayList<>();
+            while (resultado.next()) {
+                UserWithPhoneVo user = UserWithPhoneVo.of(
+                    resultado.getString("nome"),
+                    resultado.getString("telefone"),
+                    resultado.getString("email")
+                );
+                usuarios.add(user);
+            }
+            return usuarios;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Collections.emptyList();
+        }
+	}
 
 }
