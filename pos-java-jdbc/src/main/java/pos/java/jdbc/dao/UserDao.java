@@ -150,4 +150,25 @@ public class UserDao {
         }
 	}
 
+	public void deletarTelefonesDoUsuario(Long idUser) {
+        try {
+            final String sqlDeleteTelefone = "DELETE FROM tbl_telefone WHERE idUser = " + idUser;
+            PreparedStatement delete = connection.prepareStatement(sqlDeleteTelefone);
+            delete.executeUpdate();
+            connection.commit();
+
+            final String sqlDeleteUser = "DELETE FROM tbl_user WHERE id = " + idUser;
+            delete = connection.prepareStatement(sqlDeleteUser);
+            delete.executeUpdate();
+            connection.commit();
+        } catch (Exception e) {
+            try {
+                connection.rollback();
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+            e.printStackTrace();
+        }
+	}
+
 }

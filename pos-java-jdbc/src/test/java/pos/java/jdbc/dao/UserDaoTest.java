@@ -148,4 +148,34 @@ public class UserDaoTest {
 
     }
 
+    @Test
+    public void delete_phones_from_a_user() {
+        // arrange:
+        connection = SingleConnection.getConnection();
+        connectionSpy = spy(connection);
+        userDao = new UserDao(connectionSpy);
+
+        List<User> usuarios = userDao.listar();
+        final User user = usuarios.get(usuarios.size() - 1);
+
+        final Phone phone1 = Phone.of(null, "(29) 99150-1549", "celular", user.getId());
+        userDao.salvarTelefone(phone1);
+        final Phone phone2 = Phone.of(null, "(62) 90700-1888", "celular", user.getId());
+        userDao.salvarTelefone(phone2);
+        final Phone phone3 = Phone.of(null, "(81) 90282-0976", "celular", user.getId());
+        userDao.salvarTelefone(phone3);
+
+        // act:
+        userDao.deletarTelefonesDoUsuario(user.getId());
+
+        // assert:
+        try {
+            verify(connectionSpy, times(6)).prepareStatement(anyString());
+            verify(connectionSpy, times(5)).commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
 }
