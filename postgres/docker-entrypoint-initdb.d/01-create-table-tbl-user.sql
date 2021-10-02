@@ -1,3 +1,5 @@
+\connect posjava
+
 CREATE TABLE tbl_user (
 	id BIGINT NOT NULL,
 	nome CHARACTER VARYING(255),

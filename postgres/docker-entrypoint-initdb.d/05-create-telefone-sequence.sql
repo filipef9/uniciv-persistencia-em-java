@@ -1,3 +1,5 @@
+\connect posjava
+
 CREATE SEQUENCE telefonesequence
 INCREMENT 1
 MINVALUE 1

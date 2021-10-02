@@ -1,3 +1,5 @@
+\connect posjava
+
 CREATE TABLE tbl_telefone (
 	id BIGINT NOT NULL,
 	numero CHARACTER VARYING(255) NOT NULL,
