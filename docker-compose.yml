@@ -16,7 +16,7 @@ services:
     image: dpage/pgadmin4
     restart: always
     environment:
-      PGADMIN_DEFAULT_EMAIL: filipe.fsn@uniciv.com.br
+      PGADMIN_DEFAULT_EMAIL: filipe.fsn@uniciv.edu.br
       PGADMIN_DEFAULT_PASSWORD: uniciv
       PGADMIN_LISTEN_PORT: 8080
       PGADMIN_SERVER_JSON_FILE: /workspace/uniciv-pos-java-jdbc/pgadmin4/servers.json

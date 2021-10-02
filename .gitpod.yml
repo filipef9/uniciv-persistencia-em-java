@@ -1,13 +1,10 @@
-vscode:
-  extensions:
-    - vscjava.vscode-java-test@0.28.1:Vq5tqFnbBv8CzIO03Hf19A==
-    - vscjava.vscode-maven@0.21.2:tFEkt2FqLujaNTLU5AmRiQ==
-    - vscode-icons-team.vscode-icons@11.2.0:wzrAlW1rFgqS/LpeO/sU2Q==
+image:
+  file: .gitpod.Dockerfile
 
 # List the ports you want to expose and what to do when they are served. See https://www.gitpod.io/docs/config-ports/
 ports:
   - port: 8080
-    onOpen: open-preview
+    onOpen: open-browser
   - port: 5432
     onOpen: ignore
 
@@ -20,3 +17,14 @@ tasks:
       sleep 5
     init: docker-compose up --no-start
     command: docker-compose up
+
+vscode:
+  extensions:
+    - vscjava.vscode-java-pack
+    - pivotal.vscode-spring-boot
+    - vscode-icons-team.vscode-icons
+    - coenraads.bracket-pair-colorizer
+    - vscodevim.vim
+    - wakatime.vscode-wakatime
+    - asciidoctor.asciidoctor-vscode
+    - sonarsource.sonarlint-vscode
