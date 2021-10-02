@@ -10,6 +10,7 @@ services:
       PGDATA: /var/lib/postgresql/data
     volumes:
       - /workspace/db-data:/var/lib/postgresql/data
+      - /workspace/uniciv-pos-java-jdbc/postgres/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
     ports:
       - "5432:5432"
   pgadmin:
@@ -26,5 +27,6 @@ services:
       - /workspace/pgadmin-data:/var/lib/pgadmin
       - /tmp:/tmp
       - /workspace:/workspace
+      - /workspace/uniciv-pos-java-jdbc/pgadmin4/servers.json:/pgadmin4/servers.json
     links:
       - "db:pgsql-server"
