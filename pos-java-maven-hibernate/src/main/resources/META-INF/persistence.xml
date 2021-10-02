@@ -6,15 +6,19 @@
     xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
 
     <persistence-unit name="pos-java-maven-hibernate">
-       <properties>
-            <!-- Dados de conexão com banco -->
-            <property name="hibernate.connection.driver_class" value="org.postgresql.Driver" />
-            <property name="hibernate.connection.url" value="jdbc:postgresql://localhost:5432/posjavahibernate" />
-            <property name="hibernate.connection.username" value="admin" />
-            <property name="hibernate.connection.password" value="admin" />
-            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" />
-            <property name="hibernate.hbm2dll.auto" value="upate" />
-       </properties> 
+
+        <class>br.edu.uniciv.model.UsuarioPessoa</class>
+
+        <properties>
+                <!-- Dados de conexão com banco -->
+                <property name="hibernate.connection.driver_class" value="org.postgresql.Driver" />
+                <property name="hibernate.connection.url" value="jdbc:postgresql://localhost:5432/posjavahibernate" />
+                <property name="hibernate.connection.username" value="admin" />
+                <property name="hibernate.connection.password" value="admin" />
+                <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" />
+                <property name="hibernate.format_sql" value="false" />
+                <property name="hibernate.hbm2dll.auto" value="upate" />
+        </properties> 
     </persistence-unit>
 
 </persistence>
