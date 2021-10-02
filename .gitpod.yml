@@ -28,3 +28,4 @@ vscode:
     - wakatime.vscode-wakatime
     - asciidoctor.asciidoctor-vscode
     - sonarsource.sonarlint-vscode
+    - redhat.fabric8-analytics
