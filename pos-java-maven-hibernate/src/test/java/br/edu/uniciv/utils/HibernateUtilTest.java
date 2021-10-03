@@ -8,4 +8,5 @@ public class HibernateUtilTest {
     public void testeHibernateUtil() {
         HibernateUtil.getEntityManager();
     }
+
 }

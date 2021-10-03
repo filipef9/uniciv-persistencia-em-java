@@ -1,0 +1,12 @@
+{
+    "java.configuration.runtimes": [
+        {
+          "name": "JavaSE-1.8",
+          "path": "/home/gitpod/.sdkman/candidates/java/8.0.292.j9-adpt"
+        },
+        {
+          "name": "JavaSE-11",
+          "path": "/home/gitpod/.sdkman/candidates/java/11.0.12.fx-zulu"
+        }
+      ]
+}
