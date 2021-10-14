@@ -17,6 +17,7 @@ public class UsuarioPessoa {
     private String email;
     private String login;
     private String senha;
+    private Integer idade;
 
     public UsuarioPessoa() { }
 
@@ -66,6 +67,14 @@ public class UsuarioPessoa {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public Integer getIdade() {
+        return idade;
+    }
+
+    public void setIdade(Integer idade) {
+        this.idade = idade;
     }
     
 }
