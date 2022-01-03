@@ -21,4 +21,11 @@ public class DaoGenericTest {
         daoGeneric.salvar(pessoa);
     }
 
+    @Test
+    public void testeBuscar() {
+        final DaoGeneric<UsuarioPessoa> daoGeneric = new DaoGeneric<UsuarioPessoa>();
+        final UsuarioPessoa pessoa = new UsuarioPessoa();
+        pessoa.setId(2);
+    }
+
 }

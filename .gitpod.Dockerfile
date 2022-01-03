@@ -14,4 +14,4 @@ RUN \
   sudo cp -Rf fonts/* /usr/share/fonts &&\
   fc-cache -f -v
 
-RUN bash -c ". /home/gitpod/.sdkman/bin/sdkman-init.sh && sdk install java 8.0.292.j9-adpt && sdk default java 11.0.12.fx-zulu"
+RUN bash -c ". /home/gitpod/.sdkman/bin/sdkman-init.sh && sdk install java 8.0.292.j9-adpt && sdk default java 11.0.13.fx-zulu"
