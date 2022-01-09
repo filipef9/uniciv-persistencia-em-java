@@ -152,4 +152,30 @@ public class DaoGenericTest {
         assertEquals("123", primeiraPessoa.getSenha());
     }
 
+    @Test
+    public void testeQuerySomaIdades() {
+        // arrange
+
+        // act
+        final Long somaIdades = (Long) dao.getEntityManager()
+            .createQuery("select sum(u.idade) from UsuarioPessoa u")
+            .getSingleResult();
+
+        // assert
+        assertEquals(Long.valueOf(76), somaIdades);
+    }
+
+    @Test
+    public void testeQueryMediaIdades() {
+        // arrange
+
+        // act
+        final Double somaIdades = (Double) dao.getEntityManager()
+            .createQuery("select avg(u.idade) from UsuarioPessoa u")
+            .getSingleResult();
+
+        // assert
+        assertEquals(Double.valueOf(38), somaIdades);
+    }
+
 }
