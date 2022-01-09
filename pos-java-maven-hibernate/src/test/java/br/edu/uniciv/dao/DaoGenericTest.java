@@ -4,10 +4,19 @@ import br.edu.uniciv.model.UsuarioPessoa;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
+import org.junit.Before;
 import org.junit.Test;
 
 public class DaoGenericTest {
+
+    private DaoGeneric<UsuarioPessoa> dao;
+
+    @Before
+    public void setUp() {
+        dao = new DaoGeneric<>();
+    }
     
     @Test
     public void testeDaoGeneric() {
@@ -21,8 +30,7 @@ public class DaoGenericTest {
         pessoa.setEmail("filipe.fsn@uniciv.edu.br");
 
         // act
-        DaoGeneric<UsuarioPessoa> daoGeneric = new DaoGeneric<>();
-        daoGeneric.salvar(pessoa);
+        dao.salvar(pessoa);
     }
 
     @Test
@@ -31,10 +39,8 @@ public class DaoGenericTest {
         final UsuarioPessoa personToFind = new UsuarioPessoa();
         personToFind.setId(1L);
 
-        final DaoGeneric<UsuarioPessoa> daoGeneric = new DaoGeneric<UsuarioPessoa>();
-
         // act
-        final UsuarioPessoa personFound = daoGeneric.pesquisar(personToFind);
+        final UsuarioPessoa personFound = dao.pesquisar(personToFind);
 
         // assert
         assertNotNull(personFound);
@@ -52,10 +58,8 @@ public class DaoGenericTest {
         // arrange
         final Long personIdToFind = 1L;
 
-        final DaoGeneric<UsuarioPessoa> daoGeneric = new DaoGeneric<UsuarioPessoa>();
-
         // act
-        final UsuarioPessoa personFound = daoGeneric.pesquisarPorId(UsuarioPessoa.class, personIdToFind);
+        final UsuarioPessoa personFound = dao.pesquisarPorId(UsuarioPessoa.class, personIdToFind);
 
         // assert
         assertNotNull(personFound);
@@ -71,14 +75,12 @@ public class DaoGenericTest {
     @Test
     public void testeUpdateMerge() {
         // arrange
-        final DaoGeneric<UsuarioPessoa> daoGeneric = new DaoGeneric<UsuarioPessoa>();
-
-        final UsuarioPessoa personToUpdate = daoGeneric.pesquisarPorId(UsuarioPessoa.class, 1L);
+        final UsuarioPessoa personToUpdate = dao.pesquisarPorId(UsuarioPessoa.class, 1L);
         personToUpdate.setNome("Filipe Updated");
 
 
         // act
-        final UsuarioPessoa personUpdated = daoGeneric.updateMerge(personToUpdate);
+        final UsuarioPessoa personUpdated = dao.updateMerge(personToUpdate);
 
         // assert
         assertNotNull(personToUpdate);
@@ -89,6 +91,19 @@ public class DaoGenericTest {
         assertEquals("dos Santos Nascimento", personToUpdate.getSobrenome());
         assertEquals("teste", personToUpdate.getLogin());
         assertEquals("123", personToUpdate.getSenha());
+    }
+
+    @Test
+    public void testeDelete() {
+        // arrange
+        final UsuarioPessoa personToDelete = dao.pesquisarPorId(UsuarioPessoa.class, 9L);
+
+        // act
+        dao.deletarPorId(personToDelete);
+        final UsuarioPessoa personDeleted = dao.pesquisarPorId(UsuarioPessoa.class, personToDelete.getId());
+
+        // assert
+        assertNull(personDeleted);
     }
 
 }
