@@ -47,5 +47,13 @@ public class TelefoneUser {
     public void setNumero(String numero) {
         this.numero = numero;
     }
+
+    public UsuarioPessoa getUsuarioPessoa() {
+        return usuarioPessoa;
+    }
+
+    public void setUsuarioPessoa(UsuarioPessoa usuarioPessoa) {
+        this.usuarioPessoa = usuarioPessoa;
+    }
     
 }

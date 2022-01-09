@@ -9,15 +9,16 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
+import br.edu.uniciv.model.TelefoneUser;
 import br.edu.uniciv.model.UsuarioPessoa;
 
 public class DaoGenericTest {
 
-    private DaoGeneric<UsuarioPessoa> dao;
+    private DaoGeneric<UsuarioPessoa> daoUsuarioPessoa;
 
     @Before
     public void setUp() {
-        dao = new DaoGeneric<>();
+        daoUsuarioPessoa = new DaoGeneric<>();
     }
     
     @Test
@@ -32,7 +33,7 @@ public class DaoGenericTest {
         pessoa.setEmail("filipe.fsn@uniciv.edu.br");
 
         // act
-        dao.salvar(pessoa);
+        daoUsuarioPessoa.salvar(pessoa);
     }
 
     @Test
@@ -42,7 +43,7 @@ public class DaoGenericTest {
         personToFind.setId(1L);
 
         // act
-        final UsuarioPessoa personFound = dao.pesquisar(personToFind);
+        final UsuarioPessoa personFound = daoUsuarioPessoa.pesquisar(personToFind);
 
         // assert
         assertNotNull(personFound);
@@ -61,7 +62,7 @@ public class DaoGenericTest {
         final Long personIdToFind = 1L;
 
         // act
-        final UsuarioPessoa personFound = dao.pesquisarPorId(UsuarioPessoa.class, personIdToFind);
+        final UsuarioPessoa personFound = daoUsuarioPessoa.pesquisarPorId(UsuarioPessoa.class, personIdToFind);
 
         // assert
         assertNotNull(personFound);
@@ -80,7 +81,7 @@ public class DaoGenericTest {
         final String personNameToFind = "Filipe";
 
         // act
-        final List<UsuarioPessoa> pessoas = dao.getEntityManager().createQuery("from UsuarioPessoa where nome = :nome")
+        final List<UsuarioPessoa> pessoas = daoUsuarioPessoa.getEntityManager().createQuery("from UsuarioPessoa where nome = :nome")
             .setParameter("nome", personNameToFind)
             .getResultList();
         final UsuarioPessoa personFound = pessoas.get(0);
@@ -99,12 +100,12 @@ public class DaoGenericTest {
     @Test
     public void testeUpdateMerge() {
         // arrange
-        final UsuarioPessoa personToUpdate = dao.pesquisarPorId(UsuarioPessoa.class, 1L);
+        final UsuarioPessoa personToUpdate = daoUsuarioPessoa.pesquisarPorId(UsuarioPessoa.class, 1L);
         personToUpdate.setNome("Filipe Updated");
 
 
         // act
-        final UsuarioPessoa personUpdated = dao.updateMerge(personToUpdate);
+        final UsuarioPessoa personUpdated = daoUsuarioPessoa.updateMerge(personToUpdate);
 
         // assert
         assertNotNull(personUpdated);
@@ -120,11 +121,11 @@ public class DaoGenericTest {
     @Test
     public void testeDelete() {
         // arrange
-        final UsuarioPessoa personToDelete = dao.pesquisarPorId(UsuarioPessoa.class, 9L);
+        final UsuarioPessoa personToDelete = daoUsuarioPessoa.pesquisarPorId(UsuarioPessoa.class, 9L);
 
         // act
-        dao.deletarPorId(personToDelete);
-        final UsuarioPessoa personDeleted = dao.pesquisarPorId(UsuarioPessoa.class, personToDelete.getId());
+        daoUsuarioPessoa.deletarPorId(personToDelete);
+        final UsuarioPessoa personDeleted = daoUsuarioPessoa.pesquisarPorId(UsuarioPessoa.class, personToDelete.getId());
 
         // assert
         assertNull(personDeleted);
@@ -135,7 +136,7 @@ public class DaoGenericTest {
         // arrange
 
         // act
-        final List<UsuarioPessoa> pessoas = dao.listar(UsuarioPessoa.class);
+        final List<UsuarioPessoa> pessoas = daoUsuarioPessoa.listar(UsuarioPessoa.class);
         final UsuarioPessoa primeiraPessoa = pessoas.get(0); 
 
         // assert
@@ -155,7 +156,7 @@ public class DaoGenericTest {
         // arrange
 
         // act
-        final Long somaIdades = (Long) dao.getEntityManager()
+        final Long somaIdades = (Long) daoUsuarioPessoa.getEntityManager()
             .createQuery("select sum(u.idade) from UsuarioPessoa u")
             .getSingleResult();
 
@@ -168,7 +169,7 @@ public class DaoGenericTest {
         // arrange
 
         // act
-        final Double somaIdades = (Double) dao.getEntityManager()
+        final Double somaIdades = (Double) daoUsuarioPessoa.getEntityManager()
             .createQuery("select avg(u.idade) from UsuarioPessoa u")
             .getSingleResult();
 
@@ -181,7 +182,7 @@ public class DaoGenericTest {
         // arrange
 
         // act
-        final List<UsuarioPessoa> users = dao.getEntityManager()
+        final List<UsuarioPessoa> users = daoUsuarioPessoa.getEntityManager()
             .createNamedQuery("UsuarioPessoa.findAll")
             .getResultList();
 
@@ -196,7 +197,7 @@ public class DaoGenericTest {
         final String nameToFind = "Filipe";
 
         // act
-        final List<UsuarioPessoa> users = dao.getEntityManager()
+        final List<UsuarioPessoa> users = daoUsuarioPessoa.getEntityManager()
             .createNamedQuery("UsuarioPessoa.findByName")
             .setParameter("nome", nameToFind)
             .getResultList();
@@ -204,6 +205,24 @@ public class DaoGenericTest {
         // assert
         assertNotNull(users);
         assertEquals(2, users.size());
+    }
+
+    @Test
+    public void testeGravarTelefone() {
+        // arrange
+        final UsuarioPessoa aPerson = (UsuarioPessoa) daoUsuarioPessoa.pesquisarPorId(UsuarioPessoa.class, 1L);
+
+        final DaoGeneric<TelefoneUser> daoTelefoneUser = new DaoGeneric<>();
+        final TelefoneUser aNewPhone = new TelefoneUser();
+        aNewPhone.setTipo("Celular");
+        aNewPhone.setNumero("61999999999");
+        aNewPhone.setUsuarioPessoa(aPerson); 
+
+        // act
+        daoTelefoneUser.salvar(aNewPhone);
+
+        // assert
+        assertNotNull(aPerson);
     }
 
 }
