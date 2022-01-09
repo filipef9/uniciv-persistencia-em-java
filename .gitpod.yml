@@ -3,9 +3,9 @@ image:
 
 # List the ports you want to expose and what to do when they are served. See https://www.gitpod.io/docs/config-ports/
 ports:
-  - port: 8080
+  - port: 8080 # pgAdmin 4
     onOpen: open-browser
-  - port: 5432
+  - port: 5432 # PostgreSQL
     onOpen: ignore
 
 # List the start up tasks. You can start them in parallel in multiple terminals. See https://www.gitpod.io/docs/config-start-tasks/
