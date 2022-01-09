@@ -178,4 +178,34 @@ public class DaoGenericTest {
         assertEquals(Double.valueOf(38), somaIdades);
     }
 
+    @Test
+    public void testeUsuarioPessoaFindAll() {
+        // arrange
+
+        // act
+        final List<UsuarioPessoa> users = dao.getEntityManager()
+            .createNamedQuery("UsuarioPessoa.findAll")
+            .getResultList();
+
+        // assert
+        assertNotNull(users);
+        assertEquals(2, users.size());
+    }
+
+    @Test
+    public void testeUsuarioPessoaFindByName() {
+        // arrange
+        final String nameToFind = "Filipe";
+
+        // act
+        final List<UsuarioPessoa> users = dao.getEntityManager()
+            .createNamedQuery("UsuarioPessoa.findByName")
+            .setParameter("nome", nameToFind)
+            .getResultList();
+
+        // assert
+        assertNotNull(users);
+        assertEquals(2, users.size());
+    }
+
 }
