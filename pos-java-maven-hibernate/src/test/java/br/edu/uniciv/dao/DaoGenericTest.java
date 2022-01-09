@@ -77,6 +77,28 @@ public class DaoGenericTest {
     }
 
     @Test
+    public void testeBuscarPorNome() {
+        // arrange
+        final String personNameToFind = "Filipe";
+
+        // act
+        final List<UsuarioPessoa> pessoas = dao.getEntityManager().createQuery("from UsuarioPessoa where nome = :nome")
+            .setParameter("nome", personNameToFind)
+            .getResultList();
+        final UsuarioPessoa personFound = pessoas.get(0);
+
+        // assert
+        assertNotNull(personFound);
+        assertEquals(Long.valueOf(1), personFound.getId());
+        assertEquals("filipe.fsn@uniciv.edu.br", personFound.getEmail());
+        assertEquals(Integer.valueOf(38), personFound.getIdade());
+        assertEquals("Filipe", personFound.getNome());
+        assertEquals("dos Santos Nascimento", personFound.getSobrenome());
+        assertEquals("teste", personFound.getLogin());
+        assertEquals("123", personFound.getSenha());
+    }
+
+    @Test
     public void testeUpdateMerge() {
         // arrange
         final UsuarioPessoa personToUpdate = dao.pesquisarPorId(UsuarioPessoa.class, 1L);
