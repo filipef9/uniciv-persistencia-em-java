@@ -1,8 +1,8 @@
 package pos.java.jdbc.conexao;
 
-import static org.junit.Assert.assertThat;
-import static org.hamcrest.core.IsNull.notNullValue;
-import static org.hamcrest.core.Is.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.is;
 
 import java.sql.Connection;
 
@@ -14,13 +14,13 @@ public class SingleConnectionTest {
 
     @Test
     public void get_connection() {
-        _arrange:
+        // arrange:
         connection = null;
 
-        _act:
+        // act:
         connection = SingleConnection.getConnection();
 
-        _assert:
+        // assert:
         assertThat(connection, is(notNullValue()));
     }
 }
