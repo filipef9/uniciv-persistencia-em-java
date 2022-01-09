@@ -1,7 +1,5 @@
 package br.edu.uniciv.dao;
 
-import br.edu.uniciv.model.UsuarioPessoa;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -11,7 +9,7 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import antlr.collections.impl.LList;
+import br.edu.uniciv.model.UsuarioPessoa;
 
 public class DaoGenericTest {
 
@@ -109,14 +107,14 @@ public class DaoGenericTest {
         final UsuarioPessoa personUpdated = dao.updateMerge(personToUpdate);
 
         // assert
-        assertNotNull(personToUpdate);
-        assertEquals(Long.valueOf(1), personToUpdate.getId());
-        assertEquals("filipe.fsn@uniciv.edu.br", personToUpdate.getEmail());
-        assertEquals(Integer.valueOf(38), personToUpdate.getIdade());
-        assertEquals("Filipe Updated", personToUpdate.getNome());
-        assertEquals("dos Santos Nascimento", personToUpdate.getSobrenome());
-        assertEquals("teste", personToUpdate.getLogin());
-        assertEquals("123", personToUpdate.getSenha());
+        assertNotNull(personUpdated);
+        assertEquals(Long.valueOf(1), personUpdated.getId());
+        assertEquals("filipe.fsn@uniciv.edu.br", personUpdated.getEmail());
+        assertEquals(Integer.valueOf(38), personUpdated.getIdade());
+        assertEquals("Filipe Updated", personUpdated.getNome());
+        assertEquals("dos Santos Nascimento", personUpdated.getSobrenome());
+        assertEquals("teste", personUpdated.getLogin());
+        assertEquals("123", personUpdated.getSenha());
     }
 
     @Test

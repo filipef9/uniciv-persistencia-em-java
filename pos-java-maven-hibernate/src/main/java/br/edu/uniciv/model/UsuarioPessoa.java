@@ -1,11 +1,14 @@
 package br.edu.uniciv.model;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 
 @Entity
 @NamedQueries({
@@ -25,7 +28,8 @@ public class UsuarioPessoa {
     private String senha;
     private Integer idade;
 
-    public UsuarioPessoa() { }
+    @OneToMany(mappedBy = "usuarioPessoa")
+    private List<TelefoneUser> telefones;
 
     public Long getId() {
         return id;
@@ -81,6 +85,14 @@ public class UsuarioPessoa {
 
     public void setIdade(Integer idade) {
         this.idade = idade;
+    }
+
+    public List<TelefoneUser> getTelefones() {
+        return telefones;
+    }
+
+    public void setTelefones(List<TelefoneUser> telefones) {
+        this.telefones = telefones;
     }
 
     @Override
