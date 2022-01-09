@@ -1,6 +1,10 @@
 package br.edu.uniciv.dao;
 
 import br.edu.uniciv.model.UsuarioPessoa;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import org.junit.Test;
 
 public class DaoGenericTest {
@@ -23,9 +27,45 @@ public class DaoGenericTest {
 
     @Test
     public void testeBuscar() {
+        // arrange
+        final UsuarioPessoa personToFind = new UsuarioPessoa();
+        personToFind.setId(1L);
+
         final DaoGeneric<UsuarioPessoa> daoGeneric = new DaoGeneric<UsuarioPessoa>();
-        final UsuarioPessoa pessoa = new UsuarioPessoa();
-        pessoa.setId(2);
+
+        // act
+        final UsuarioPessoa personFound = daoGeneric.pesquisar(personToFind);
+
+        // assert
+        assertNotNull(personFound);
+        assertEquals(Long.valueOf(1), personFound.getId());
+        assertEquals("filipe.fsn@uniciv.edu.br", personFound.getEmail());
+        assertEquals(Integer.valueOf(38), personFound.getIdade());
+        assertEquals("Filipe", personFound.getNome());
+        assertEquals("dos Santos Nascimento", personFound.getSobrenome());
+        assertEquals("teste", personFound.getLogin());
+        assertEquals("123", personFound.getSenha());
+    }
+
+    @Test
+    public void testeBuscarPorId() {
+        // arrange
+        final Long personIdToFind = 1L;
+
+        final DaoGeneric<UsuarioPessoa> daoGeneric = new DaoGeneric<UsuarioPessoa>();
+
+        // act
+        final UsuarioPessoa personFound = daoGeneric.pesquisarPorId(UsuarioPessoa.class, personIdToFind);
+
+        // assert
+        assertNotNull(personFound);
+        assertEquals(Long.valueOf(1), personFound.getId());
+        assertEquals("filipe.fsn@uniciv.edu.br", personFound.getEmail());
+        assertEquals(Integer.valueOf(38), personFound.getIdade());
+        assertEquals("Filipe", personFound.getNome());
+        assertEquals("dos Santos Nascimento", personFound.getSobrenome());
+        assertEquals("teste", personFound.getLogin());
+        assertEquals("123", personFound.getSenha());
     }
 
 }
