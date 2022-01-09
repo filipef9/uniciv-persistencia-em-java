@@ -6,8 +6,12 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
+
+import antlr.collections.impl.LList;
 
 public class DaoGenericTest {
 
@@ -104,6 +108,26 @@ public class DaoGenericTest {
 
         // assert
         assertNull(personDeleted);
+    }
+
+    @Test
+    public void testeListar() {
+        // arrange
+
+        // act
+        final List<UsuarioPessoa> pessoas = dao.listar(UsuarioPessoa.class);
+        final UsuarioPessoa primeiraPessoa = pessoas.get(0); 
+
+        // assert
+        assertNotNull(pessoas);
+        assertEquals(1, pessoas.size());
+        assertEquals(Long.valueOf(1), primeiraPessoa.getId());
+        assertEquals("filipe.fsn@uniciv.edu.br", primeiraPessoa.getEmail());
+        assertEquals(Integer.valueOf(38), primeiraPessoa.getIdade());
+        assertEquals("Filipe Updated", primeiraPessoa.getNome());
+        assertEquals("dos Santos Nascimento", primeiraPessoa.getSobrenome());
+        assertEquals("teste", primeiraPessoa.getLogin());
+        assertEquals("123", primeiraPessoa.getSenha());
     }
 
 }

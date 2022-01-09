@@ -2,6 +2,8 @@ package br.edu.uniciv.dao;
 
 import br.edu.uniciv.utils.HibernateUtil;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
@@ -44,6 +46,12 @@ public class DaoGeneric<E> {
         entityManager.flush();
         entityManager.clear();
         transaction.commit();
+    }
+
+    public List<E> listar(Class<E> entidade) {
+        return entityManager.createQuery("from " + entidade.getName())
+            .getResultList(); 
+
     }
 
 }
