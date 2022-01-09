@@ -68,4 +68,27 @@ public class DaoGenericTest {
         assertEquals("123", personFound.getSenha());
     }
 
+    @Test
+    public void testeUpdateMerge() {
+        // arrange
+        final DaoGeneric<UsuarioPessoa> daoGeneric = new DaoGeneric<UsuarioPessoa>();
+
+        final UsuarioPessoa personToUpdate = daoGeneric.pesquisarPorId(UsuarioPessoa.class, 1L);
+        personToUpdate.setNome("Filipe Updated");
+
+
+        // act
+        final UsuarioPessoa personUpdated = daoGeneric.updateMerge(personToUpdate);
+
+        // assert
+        assertNotNull(personToUpdate);
+        assertEquals(Long.valueOf(1), personToUpdate.getId());
+        assertEquals("filipe.fsn@uniciv.edu.br", personToUpdate.getEmail());
+        assertEquals(Integer.valueOf(38), personToUpdate.getIdade());
+        assertEquals("Filipe Updated", personToUpdate.getNome());
+        assertEquals("dos Santos Nascimento", personToUpdate.getSobrenome());
+        assertEquals("teste", personToUpdate.getLogin());
+        assertEquals("123", personToUpdate.getSenha());
+    }
+
 }

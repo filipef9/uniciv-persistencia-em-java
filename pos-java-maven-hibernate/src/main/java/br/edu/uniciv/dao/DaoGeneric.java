@@ -2,8 +2,6 @@ package br.edu.uniciv.dao;
 
 import br.edu.uniciv.utils.HibernateUtil;
 
-import java.lang.reflect.ParameterizedType;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
@@ -16,6 +14,15 @@ public class DaoGeneric<E> {
         transaction.begin();
         entityManager.persist(entidade);
         transaction.commit();
+    }
+
+    public E updateMerge(E entidade) {
+        final EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+        final E entityUpdated = entityManager.merge(entidade);
+        transaction.commit();
+
+        return entityUpdated;
     }
 
     public E pesquisar(E entidade) {
