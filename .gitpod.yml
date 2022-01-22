@@ -21,7 +21,9 @@ tasks:
 vscode:
   extensions:
     - vscjava.vscode-java-pack
-    - pivotal.vscode-spring-boot
+    - pivotal.vscode-boot-dev-pack
+    - vscjava.vscode-spring-boot-dashboard
+    - gabrielbb.vscode-lombok
     - vscode-icons-team.vscode-icons
     - coenraads.bracket-pair-colorizer
     - vscodevim.vim
