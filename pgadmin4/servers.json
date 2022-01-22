@@ -1,7 +1,7 @@
 {
     "Servers": {
         "1": {
-            "Name": "Pós-Java",
+            "Name": "persistencia-em-java",
             "Group": "Uniciv",
             "Port": 5432,
             "Username": "admin",

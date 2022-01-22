@@ -1,2 +1,2 @@
-CREATE DATABASE projetospringdata;
-GRANT ALL PRIVILEGES ON DATABASE projetospringdata TO admin;
+CREATE DATABASE "projeto-spring-data";
+GRANT ALL PRIVILEGES ON DATABASE "projeto-spring-data" TO admin;
