@@ -103,4 +103,18 @@ public class AppSpringDataTest {
         assertThat(allUsers, hasSize(3));
     }
 
+    @Test
+    public void testeUpdate() {
+        // Arrange
+        final UsuarioSpringData aNewUser = createAnUser();
+        final UsuarioSpringData savedUser = dao.save(aNewUser);
+        savedUser.setNome("Filipe Updated");
+
+        // Act
+        final UsuarioSpringData updatedUser = dao.save(savedUser);
+
+        // Assert
+        assertThat(updatedUser.getNome(), is(equalTo("Filipe Updated")));
+    }
+
 }
