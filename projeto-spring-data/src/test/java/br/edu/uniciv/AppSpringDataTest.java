@@ -2,13 +2,10 @@ package br.edu.uniciv;
 
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.notNullValue;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 
-
+import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
 
 import org.junit.After;
 import org.junit.Test;
@@ -32,7 +29,7 @@ public class AppSpringDataTest {
         dao.deleteAll();
     }
 
-    private UsuarioSpringData createNewUser() {
+    private UsuarioSpringData createAnUser() {
         final UsuarioSpringData aNewUser = new UsuarioSpringData();
         aNewUser.setEmail("javaavancacdo@javaavancado.com");
         aNewUser.setIdade(38);
@@ -41,11 +38,36 @@ public class AppSpringDataTest {
         aNewUser.setNome("Filipe");
         return aNewUser;
     }
+
+    private Collection<UsuarioSpringData> createListOfUsers() {
+        final UsuarioSpringData filipe = new UsuarioSpringData();
+        filipe.setEmail("javaavancacdo@javaavancado.com");
+        filipe.setIdade(38);
+        filipe.setLogin("filipe.fsn");
+        filipe.setSenha("12345678");
+        filipe.setNome("Filipe");
+
+        final UsuarioSpringData miqueias = new UsuarioSpringData();
+        miqueias.setEmail("javaavancacdo@javaavancado.com");
+        miqueias.setIdade(38);
+        miqueias.setLogin("filipe.fsn");
+        miqueias.setSenha("12345678");
+        miqueias.setNome("Filipe");
+
+        final UsuarioSpringData miguel = new UsuarioSpringData();
+        miguel.setEmail("javaavancacdo@javaavancado.com");
+        miguel.setIdade(38);
+        miguel.setLogin("filipe.fsn");
+        miguel.setSenha("12345678");
+        miguel.setNome("Filipe");
+
+        return Arrays.asList(filipe, miqueias, miguel);
+    }
     
     @Test
     public void testeInsert() {
         // Arrange
-        final UsuarioSpringData aNewUser = createNewUser();
+        final UsuarioSpringData aNewUser = createAnUser();
 
         // Act
         final UsuarioSpringData savedUser = dao.save(aNewUser);
@@ -57,7 +79,7 @@ public class AppSpringDataTest {
     @Test
     public void testeConsulta() {
         // Arrange
-        final UsuarioSpringData aNewUser = createNewUser();
+        final UsuarioSpringData aNewUser = createAnUser();
         final UsuarioSpringData savedUser = dao.save(aNewUser);
 
         // Act
@@ -65,6 +87,20 @@ public class AppSpringDataTest {
 
         // Assert
         assertThat(foundUser, is(true));
+    }
+
+    @Test
+    public void testeConsultaTodos() {
+        // Arrange
+        final Collection<UsuarioSpringData> newUsers = createListOfUsers();
+        dao.saveAll(newUsers);
+
+        // Act
+        Collection<UsuarioSpringData> allUsers = dao.findAll();
+
+        // Assert
+        assertThat(allUsers, is(not(empty())));
+        assertThat(allUsers, hasSize(3));
     }
 
 }
