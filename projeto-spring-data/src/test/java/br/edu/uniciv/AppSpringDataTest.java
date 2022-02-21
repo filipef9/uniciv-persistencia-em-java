@@ -149,4 +149,20 @@ public class AppSpringDataTest {
         assertThat(foundUser, is(notFound));
     }
 
+    @Test
+    public void testeConsultaNome() {
+        // arrange
+        final UsuarioSpringData aNewUser = createAnUser();
+        final UsuarioSpringData savedUser = dao.save(aNewUser);
+        final String nameToSearch = savedUser.getNome();
+
+        // act
+        final Collection<UsuarioSpringData> usersFound = dao.buscaPorNome(nameToSearch);
+        final String userNameReturned = ((UsuarioSpringData) usersFound.toArray()[0]).getNome();
+
+        // assert
+        assertThat(usersFound, is(not(empty())));
+        assertThat(userNameReturned, is(equalTo(nameToSearch)));
+    }
+
 }
