@@ -66,55 +66,87 @@ public class AppSpringDataTest {
     
     @Test
     public void testeInsert() {
-        // Arrange
+        // arrange
         final UsuarioSpringData aNewUser = createAnUser();
 
-        // Act
+        // act
         final UsuarioSpringData savedUser = dao.save(aNewUser);
 
-        // Assert
+        // assert
         assertThat(savedUser, notNullValue());
     }
 
     @Test
     public void testeConsulta() {
-        // Arrange
+        // arrange
         final UsuarioSpringData aNewUser = createAnUser();
         final UsuarioSpringData savedUser = dao.save(aNewUser);
 
-        // Act
+        // act
         final boolean foundUser = dao.findById(savedUser.getId()).isPresent();
 
-        // Assert
+        // assert
         assertThat(foundUser, is(true));
     }
 
     @Test
     public void testeConsultaTodos() {
-        // Arrange
+        // arrange
         final Collection<UsuarioSpringData> newUsers = createListOfUsers();
         dao.saveAll(newUsers);
 
-        // Act
+        // act
         Collection<UsuarioSpringData> allUsers = dao.findAll();
 
-        // Assert
+        // assert
         assertThat(allUsers, is(not(empty())));
         assertThat(allUsers, hasSize(3));
     }
 
     @Test
     public void testeUpdate() {
-        // Arrange
+        // arrange
         final UsuarioSpringData aNewUser = createAnUser();
         final UsuarioSpringData savedUser = dao.save(aNewUser);
         savedUser.setNome("Filipe Updated");
 
-        // Act
+        // act
         final UsuarioSpringData updatedUser = dao.save(savedUser);
 
-        // Assert
+        // assert
         assertThat(updatedUser.getNome(), is(equalTo("Filipe Updated")));
+    }
+
+    @Test
+    public void testeDeleteById() {
+        // arrange
+        final UsuarioSpringData aNewUser = createAnUser();
+        final UsuarioSpringData savedUser = dao.save(aNewUser);
+        final Long userIdToDelete = savedUser.getId();
+        boolean notFound = false;
+
+        // act
+        dao.deleteById(userIdToDelete);
+        final boolean foundUser = dao.findById(userIdToDelete).isPresent();
+        
+        // assert
+        assertThat(foundUser, is(notFound));
+    }
+
+    @Test
+    public void testeDeleteEntity() {
+        // arrange
+        final UsuarioSpringData aNewUser = createAnUser();
+        final UsuarioSpringData savedUser = dao.save(aNewUser);
+        final Long userIdToDelete = savedUser.getId();
+        boolean notFound = false;
+
+        // act
+        dao.delete(savedUser);
+        final boolean foundUser = dao.findById(userIdToDelete).isPresent();
+        
+        // assert
+        assertThat(foundUser, is(notFound));
     }
 
 }
