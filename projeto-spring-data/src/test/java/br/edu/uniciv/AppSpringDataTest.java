@@ -165,4 +165,20 @@ public class AppSpringDataTest {
         assertThat(userNameReturned, is(equalTo(nameToSearch)));
     }
 
+    @Test
+    public void testeConsultaNomeParam() {
+        // arrange
+        final UsuarioSpringData aNewUser = createAnUser();
+        final UsuarioSpringData savedUser = dao.save(aNewUser);
+        final String nameToSearch = savedUser.getNome();
+
+        // act
+        final UsuarioSpringData userFound = dao.buscaPorNomeParam(nameToSearch);
+        final String userNameReturned = userFound.getNome();
+
+        // assert
+        assertThat(userFound, is(notNullValue()));
+        assertThat(userNameReturned, is(equalTo(nameToSearch)));
+    }
+
 }

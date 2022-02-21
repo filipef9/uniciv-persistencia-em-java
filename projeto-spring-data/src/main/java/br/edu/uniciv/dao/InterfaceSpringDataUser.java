@@ -4,6 +4,7 @@ import java.util.Collection;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import br.edu.uniciv.model.UsuarioSpringData;
@@ -16,4 +17,6 @@ public interface InterfaceSpringDataUser extends CrudRepository<UsuarioSpringDat
     @Query(value = "select p from UsuarioSpringData p where p.nome like %?1%")
     Collection<UsuarioSpringData> buscaPorNome(final String nome);
 
+    @Query(value = "select p from UsuarioSpringData p where p.nome = :paramnome")
+    UsuarioSpringData buscaPorNomeParam(@Param("paramnome") String paramnome);
 }
