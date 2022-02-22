@@ -198,4 +198,21 @@ public class AppSpringDataTest {
         assertThat(foundUser, is(notFound));
     }
 
+    @Test
+    public void testeUpdateEmailPorNome() {
+        // arrange
+        final UsuarioSpringData aNewUser = createAnUser();
+        final UsuarioSpringData savedUser = dao.save(aNewUser);
+        final String nameToSearch = savedUser.getNome();
+        final String newEmail = savedUser.getEmail() + " updated";
+        
+        // act
+        dao.updateEmailPorNome(nameToSearch, newEmail);
+        final UsuarioSpringData foundUser = dao.buscaPorNomeParam(nameToSearch);
+        final String emailUpdated = foundUser.getEmail();
+
+        // assert
+        assertThat(emailUpdated, is(equalTo(newEmail)));
+    }
+
 }

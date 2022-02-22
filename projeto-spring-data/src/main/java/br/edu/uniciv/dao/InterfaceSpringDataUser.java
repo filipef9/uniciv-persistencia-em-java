@@ -16,10 +16,10 @@ public interface InterfaceSpringDataUser extends CrudRepository<UsuarioSpringDat
     
     Collection<UsuarioSpringData> findAll();
 
-    @Query(value = "select p from UsuarioSpringData p where p.nome like %?1%")
+    @Query("select p from UsuarioSpringData p where p.nome like %?1%")
     Collection<UsuarioSpringData> buscaPorNome(final String nome);
 
-    @Query(value = "select p from UsuarioSpringData p where p.nome = :paramnome")
+    @Query("select p from UsuarioSpringData p where p.nome = :paramnome")
     UsuarioSpringData buscaPorNomeParam(@Param("paramnome") String paramnome);
 
     @Transactional
@@ -27,4 +27,11 @@ public interface InterfaceSpringDataUser extends CrudRepository<UsuarioSpringDat
     @Query("delete from UsuarioSpringData u where u.nome = :nome")
     void deletePorNome(@Param("nome") String nome);
 
+    @Transactional
+    @Modifying
+    @Query("update UsuarioSpringData u set u.email = :novoEmail where u.nome = :nome")
+    void updateEmailPorNome(
+        @Param("nome") String nome,
+        @Param("novoEmail") String novoEmail
+    );
 }
