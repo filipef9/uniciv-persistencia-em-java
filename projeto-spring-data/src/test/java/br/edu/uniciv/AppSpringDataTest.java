@@ -181,4 +181,21 @@ public class AppSpringDataTest {
         assertThat(userNameReturned, is(equalTo(nameToSearch)));
     }
 
+    @Test
+    public void testeDeletePorNome() {
+        // arrange
+        final UsuarioSpringData aNewUser = createAnUser();
+        final UsuarioSpringData savedUser = dao.save(aNewUser);
+        final String nameToDelete = savedUser.getNome();
+        final Long idToFind = savedUser.getId();
+        boolean notFound = false;
+
+        // act
+        dao.deletePorNome(nameToDelete);
+        final boolean foundUser = dao.findById(idToFind).isPresent();
+
+        // assert
+        assertThat(foundUser, is(notFound));
+    }
+
 }
