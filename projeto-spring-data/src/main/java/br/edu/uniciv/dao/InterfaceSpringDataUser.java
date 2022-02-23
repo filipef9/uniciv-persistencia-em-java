@@ -1,6 +1,7 @@
 package br.edu.uniciv.dao;
 
 import java.util.Collection;
+import java.sql.SQLException;
 
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -16,13 +17,15 @@ public interface InterfaceSpringDataUser extends CrudRepository<UsuarioSpringDat
     
     Collection<UsuarioSpringData> findAll();
 
+    @Transactional(readOnly = true)
     @Query("select p from UsuarioSpringData p where p.nome like %?1%")
     Collection<UsuarioSpringData> buscaPorNome(final String nome);
 
+    @Transactional(readOnly = true)
     @Query("select p from UsuarioSpringData p where p.nome = :paramnome")
     UsuarioSpringData buscaPorNomeParam(@Param("paramnome") String paramnome);
 
-    @Transactional
+    @Transactional(rollbackFor = SQLException.class)
     @Modifying
     @Query("delete from UsuarioSpringData u where u.nome = :nome")
     void deletePorNome(@Param("nome") String nome);
