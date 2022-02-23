@@ -37,4 +37,5 @@ public interface InterfaceSpringDataUser extends CrudRepository<UsuarioSpringDat
         @Param("nome") String nome,
         @Param("novoEmail") String novoEmail
     );
+    
 }

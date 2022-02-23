@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import br.edu.uniciv.dao.InterfaceSpringDataUser;
+import br.edu.uniciv.dao.InterfaceTelefone;
+import br.edu.uniciv.model.Telefone;
 import br.edu.uniciv.model.UsuarioSpringData;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -22,11 +25,15 @@ import br.edu.uniciv.model.UsuarioSpringData;
 public class AppSpringDataTest {
 
     @Autowired
-    private InterfaceSpringDataUser dao;
+    private InterfaceSpringDataUser daoUser;
 
-    @After
-    public void tearDown() {
-        dao.deleteAll();
+    @Autowired
+    private InterfaceTelefone daoTelefone;
+
+    @Before
+    public void setUp() {
+        daoTelefone.deleteAll();
+        daoUser.deleteAll();
     }
 
     private UsuarioSpringData createAnUser() {
@@ -70,7 +77,7 @@ public class AppSpringDataTest {
         final UsuarioSpringData aNewUser = createAnUser();
 
         // act
-        final UsuarioSpringData savedUser = dao.save(aNewUser);
+        final UsuarioSpringData savedUser = daoUser.save(aNewUser);
 
         // assert
         assertThat(savedUser, notNullValue());
@@ -80,10 +87,10 @@ public class AppSpringDataTest {
     public void testeConsulta() {
         // arrange
         final UsuarioSpringData aNewUser = createAnUser();
-        final UsuarioSpringData savedUser = dao.save(aNewUser);
+        final UsuarioSpringData savedUser = daoUser.save(aNewUser);
 
         // act
-        final boolean foundUser = dao.findById(savedUser.getId()).isPresent();
+        final boolean foundUser = daoUser.findById(savedUser.getId()).isPresent();
 
         // assert
         assertThat(foundUser, is(true));
@@ -93,10 +100,10 @@ public class AppSpringDataTest {
     public void testeConsultaTodos() {
         // arrange
         final Collection<UsuarioSpringData> newUsers = createListOfUsers();
-        dao.saveAll(newUsers);
+        daoUser.saveAll(newUsers);
 
         // act
-        Collection<UsuarioSpringData> allUsers = dao.findAll();
+        Collection<UsuarioSpringData> allUsers = daoUser.findAll();
 
         // assert
         assertThat(allUsers, is(not(empty())));
@@ -107,11 +114,11 @@ public class AppSpringDataTest {
     public void testeUpdate() {
         // arrange
         final UsuarioSpringData aNewUser = createAnUser();
-        final UsuarioSpringData savedUser = dao.save(aNewUser);
+        final UsuarioSpringData savedUser = daoUser.save(aNewUser);
         savedUser.setNome("Filipe Updated");
 
         // act
-        final UsuarioSpringData updatedUser = dao.save(savedUser);
+        final UsuarioSpringData updatedUser = daoUser.save(savedUser);
 
         // assert
         assertThat(updatedUser.getNome(), is(equalTo("Filipe Updated")));
@@ -121,13 +128,13 @@ public class AppSpringDataTest {
     public void testeDeleteById() {
         // arrange
         final UsuarioSpringData aNewUser = createAnUser();
-        final UsuarioSpringData savedUser = dao.save(aNewUser);
+        final UsuarioSpringData savedUser = daoUser.save(aNewUser);
         final Long userIdToDelete = savedUser.getId();
         boolean notFound = false;
 
         // act
-        dao.deleteById(userIdToDelete);
-        final boolean foundUser = dao.findById(userIdToDelete).isPresent();
+        daoUser.deleteById(userIdToDelete);
+        final boolean foundUser = daoUser.findById(userIdToDelete).isPresent();
         
         // assert
         assertThat(foundUser, is(notFound));
@@ -137,13 +144,13 @@ public class AppSpringDataTest {
     public void testeDeleteEntity() {
         // arrange
         final UsuarioSpringData aNewUser = createAnUser();
-        final UsuarioSpringData savedUser = dao.save(aNewUser);
+        final UsuarioSpringData savedUser = daoUser.save(aNewUser);
         final Long userIdToDelete = savedUser.getId();
         boolean notFound = false;
 
         // act
-        dao.delete(savedUser);
-        final boolean foundUser = dao.findById(userIdToDelete).isPresent();
+        daoUser.delete(savedUser);
+        final boolean foundUser = daoUser.findById(userIdToDelete).isPresent();
         
         // assert
         assertThat(foundUser, is(notFound));
@@ -153,11 +160,11 @@ public class AppSpringDataTest {
     public void testeConsultaNome() {
         // arrange
         final UsuarioSpringData aNewUser = createAnUser();
-        final UsuarioSpringData savedUser = dao.save(aNewUser);
+        final UsuarioSpringData savedUser = daoUser.save(aNewUser);
         final String nameToSearch = savedUser.getNome();
 
         // act
-        final Collection<UsuarioSpringData> usersFound = dao.buscaPorNome(nameToSearch);
+        final Collection<UsuarioSpringData> usersFound = daoUser.buscaPorNome(nameToSearch);
         final String userNameReturned = ((UsuarioSpringData) usersFound.toArray()[0]).getNome();
 
         // assert
@@ -169,11 +176,11 @@ public class AppSpringDataTest {
     public void testeConsultaNomeParam() {
         // arrange
         final UsuarioSpringData aNewUser = createAnUser();
-        final UsuarioSpringData savedUser = dao.save(aNewUser);
+        final UsuarioSpringData savedUser = daoUser.save(aNewUser);
         final String nameToSearch = savedUser.getNome();
 
         // act
-        final UsuarioSpringData userFound = dao.buscaPorNomeParam(nameToSearch);
+        final UsuarioSpringData userFound = daoUser.buscaPorNomeParam(nameToSearch);
         final String userNameReturned = userFound.getNome();
 
         // assert
@@ -185,14 +192,14 @@ public class AppSpringDataTest {
     public void testeDeletePorNome() {
         // arrange
         final UsuarioSpringData aNewUser = createAnUser();
-        final UsuarioSpringData savedUser = dao.save(aNewUser);
+        final UsuarioSpringData savedUser = daoUser.save(aNewUser);
         final String nameToDelete = savedUser.getNome();
         final Long idToFind = savedUser.getId();
         boolean notFound = false;
 
         // act
-        dao.deletePorNome(nameToDelete);
-        final boolean foundUser = dao.findById(idToFind).isPresent();
+        daoUser.deletePorNome(nameToDelete);
+        final boolean foundUser = daoUser.findById(idToFind).isPresent();
 
         // assert
         assertThat(foundUser, is(notFound));
@@ -202,17 +209,37 @@ public class AppSpringDataTest {
     public void testeUpdateEmailPorNome() {
         // arrange
         final UsuarioSpringData aNewUser = createAnUser();
-        final UsuarioSpringData savedUser = dao.save(aNewUser);
+        final UsuarioSpringData savedUser = daoUser.save(aNewUser);
         final String nameToSearch = savedUser.getNome();
         final String newEmail = savedUser.getEmail() + " updated";
         
         // act
-        dao.updateEmailPorNome(nameToSearch, newEmail);
-        final UsuarioSpringData foundUser = dao.buscaPorNomeParam(nameToSearch);
+        daoUser.updateEmailPorNome(nameToSearch, newEmail);
+        final UsuarioSpringData foundUser = daoUser.buscaPorNomeParam(nameToSearch);
         final String emailUpdated = foundUser.getEmail();
 
         // assert
         assertThat(emailUpdated, is(equalTo(newEmail)));
+    }
+    
+    @Test 
+    public void testeInsertTelefone() {
+        // arrange
+        final UsuarioSpringData aNewUser = createAnUser();
+        final UsuarioSpringData savedUser = daoUser.save(aNewUser);
+
+        final String newPhoneNumber = "99999999999";
+        final Telefone newPhone = new Telefone();
+        newPhone.setTipo("Celular");
+        newPhone.setNumero(newPhoneNumber);
+        newPhone.setUsuarioSpringData(savedUser);
+
+        // act
+        final Telefone phoneInserted = daoTelefone.save(newPhone);
+        final String phoneNumberInserted = phoneInserted.getNumero();
+
+        // assert
+        assertThat(phoneNumberInserted, is(equalTo(newPhoneNumber)));
     }
 
 }

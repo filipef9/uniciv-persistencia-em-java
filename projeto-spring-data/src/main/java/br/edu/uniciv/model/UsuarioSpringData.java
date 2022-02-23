@@ -1,9 +1,12 @@
 package br.edu.uniciv.model;
 
+import java.util.Collection;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public class UsuarioSpringData {
@@ -17,6 +20,9 @@ public class UsuarioSpringData {
     private String nome;
     private String email;
     private int idade;
+
+    @OneToMany(mappedBy = "usuarioSpringData", orphanRemoval = true)
+    private Collection<Telefone> telefones;
 
     public Long getId() {
         return id;
@@ -64,6 +70,14 @@ public class UsuarioSpringData {
 
     public void setIdade(int idade) {
         this.idade = idade;
+    }
+
+    public Collection<Telefone> getTelefones() {
+        return telefones;
+    }
+
+    public void setTelefones(Collection<Telefone> telefones) {
+        this.telefones = telefones;
     }
 
 }
